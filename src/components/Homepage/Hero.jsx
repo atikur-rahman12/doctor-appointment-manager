@@ -82,7 +82,7 @@ const Hero = () => {
                       alt="Doctor"
                       width={900}
                       height={900}
-                      className="w-full h-[420px] object-cover"
+                      className="w-full h-105 object-cover"
                     />
                   </SwiperSlide>
                 ))}
