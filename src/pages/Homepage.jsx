@@ -1,15 +1,17 @@
-import Hero from '@/components/Homepage/Hero';
-import WhyChoose from '@/components/Homepage/WhyChoose';
-import React from 'react';
+import Hero from "@/components/Homepage/Hero";
+import WhyChoose from "@/components/Homepage/WhyChoose";
+import Review from "@/components/shared/Review";
+import React from "react";
 
 const Homepage = () => {
-    return (
-        <div>
-            <Hero />
-            
-            <WhyChoose />
-        </div>
-    );
+  return (
+    <div>
+      <Hero />
+
+      <WhyChoose />
+      <Review />
+    </div>
+  );
 };
 
 export default Homepage;

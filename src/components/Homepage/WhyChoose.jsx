@@ -28,9 +28,6 @@ const features = [
 const WhyChoose = () => {
   return (
     <section className="py-20 bg-slate-950 relative overflow-hidden">
-      <div className="absolute top-10 left-10 w-72 h-72 bg-cyan-500/20 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-600/20 blur-[120px] rounded-full"></div>
-
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-white">

@@ -19,10 +19,6 @@ const images = [HeroImage, HeroImage1, HeroImage2];
 const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-slate-950">
-      {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500/20 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-blue-600/20 blur-[120px] rounded-full"></div>
-
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
           {/* Left Content */}
