@@ -4,9 +4,11 @@ import { Card, Button } from "@heroui/react";
 
 import { Star, MapPin, Stethoscope } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const AppointCards = ({ appointment }) => {
   const {
+    _id,
     name,
     specialty,
     image,
@@ -64,9 +66,11 @@ const AppointCards = ({ appointment }) => {
                 </span>
               </div>
 
-              <Button className="rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:scale-[1.02] transition">
-                View Details
-              </Button>
+              <Link href={`/appointments/${_id}`}>
+                <Button className="rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:scale-[1.02] transition">
+                  View Details
+                </Button>
+              </Link>
             </div>
           </div>
         </Card>
