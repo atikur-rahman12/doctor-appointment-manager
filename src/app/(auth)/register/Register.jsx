@@ -13,13 +13,13 @@ import {
 
 import { User, Mail, Lock, Image as ImageIcon } from "lucide-react";
 
-import { FaArrowRight, FaGoogle } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
+import google from "@/assets/google1.jpg";
+import Image from "next/image";
 
 const Register = () => {
   return (
     <section className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-16 relative overflow-hidden">
-
-
       {/* Card */}
       <div className="w-full max-w-md relative z-10">
         <div className="rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl p-8">
@@ -165,7 +165,13 @@ const Register = () => {
 
           {/* Google Signup */}
           <Button className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300">
-            <FaGoogle className="text-red-400" />
+            <Image
+              src={google}
+              alt="google"
+              height={25}
+              width={25}
+              className="rounded-full mr-2"
+            />
             Continue with Google
           </Button>
 
