@@ -11,10 +11,6 @@ const fetchSingleAppointment = async (id) => {
     },
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch appointment");
-  }
-
   const data = await res.json();
 
   return data || {};
@@ -42,7 +38,6 @@ const DetailsPage = async ({ params }) => {
     <section className="min-h-screen bg-slate-950 py-16 px-4 md:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
-          {/* Left Side */}
           <Card className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl">
             <div className="h-100 md:h-170 w-full">
               <Image
@@ -55,15 +50,12 @@ const DetailsPage = async ({ params }) => {
             </div>
           </Card>
 
-          {/* Right Side */}
           <div>
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 text-cyan-300 text-sm mb-6">
               <Stethoscope size={16} />
               {specialty}
             </div>
 
-            {/* Name */}
             <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
               {name}
             </h1>
@@ -75,21 +67,17 @@ const DetailsPage = async ({ params }) => {
               </span>
             </div>
 
-            {/* Description */}
             <p className="mt-6 text-gray-400 leading-relaxed">{description}</p>
 
-            {/* Info Cards */}
             <div className="grid sm:grid-cols-2 gap-5 mt-8">
-              {/* Experience */}
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
                 <p className="text-gray-400 text-sm">Experience</p>
 
                 <h3 className="text-white text-lg font-semibold mt-2">
-                  {experience} Years
+                  {experience}
                 </h3>
               </div>
 
-              {/* Fee */}
               <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
                 <p className="text-gray-400 text-sm">Consultation Fee</p>
 
@@ -99,7 +87,6 @@ const DetailsPage = async ({ params }) => {
               </div>
             </div>
 
-            {/* More Info */}
             <div className="mt-8 space-y-5">
               <div className="flex items-center gap-3 text-gray-300">
                 <Hospital className="text-cyan-400" size={18} />
@@ -113,8 +100,7 @@ const DetailsPage = async ({ params }) => {
                 <span>{location}</span>
               </div>
 
-              {/* Availability */}
-              <div className="mt-8">
+              <div className="mt-4">
                 <div className="flex items-center gap-3 mb-4 text-gray-300">
                   <Clock3 className="text-cyan-400" size={18} />
                   <span className="font-semibold text-white">Availability</span>
@@ -133,7 +119,6 @@ const DetailsPage = async ({ params }) => {
               </div>
             </div>
 
-            {/* Button */}
             <div className="mt-10">
               <Button className="px-8 py-6 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 text-white text-lg font-semibold hover:scale-[1.03] transition duration-300 shadow-xl">
                 Book Appointment
