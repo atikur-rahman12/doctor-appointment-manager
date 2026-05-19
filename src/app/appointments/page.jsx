@@ -2,18 +2,27 @@
 
 import { useEffect, useState } from "react";
 import AppointCards from "@/components/AppointCards";
+import { Spinner } from "@heroui/react";
 
 const AppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAppointments = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
-      );
-      const data = await res.json();
-      setAppointments(data);
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
+        );
+
+        const data = await res.json();
+        setAppointments(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchAppointments();
@@ -53,26 +62,33 @@ const AppointmentsPage = () => {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredAppointments.length > 0 ? (
-            filteredAppointments.map((appointment) => (
-              <AppointCards key={appointment._id} appointment={appointment} />
-            ))
-          ) : (
-            <p className="col-span-full flex flex-col items-center justify-center py-20 text-center">
-              <span className="text-6xl mb-4">🩺</span>
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex items-center justify-center py-32">
+            <Spinner size="lg" />
+          </div>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredAppointments.length > 0 ? (
+              filteredAppointments.map((appointment) => (
+                <AppointCards key={appointment._id} appointment={appointment} />
+              ))
+            ) : (
+              <p className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+                <span className="text-6xl mb-4">🩺</span>
 
-              <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                No Doctor Found
-              </span>
+                <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  No Doctor Found
+                </span>
 
-              <span className="text-gray-400 mt-3 max-w-md">
-                We couldn&apos;t find any doctor matching your search. Try
-                another name.
-              </span>
-            </p>
-          )}
-        </div>
+                <span className="text-gray-400 mt-3 max-w-md">
+                  We couldn&apos;t find any doctor matching your search. Try
+                  another name.
+                </span>
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

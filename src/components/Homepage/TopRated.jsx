@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import AppointCards from "@/components/AppointCards";
+import { Spinner } from "@heroui/react";
 
 const fetchAppointments = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments`, {
@@ -9,13 +11,31 @@ const fetchAppointments = async () => {
   return data || [];
 };
 
-const TopRated = async () => {
+const TopRatedContent = async () => {
   const appointments = await fetchAppointments();
 
   const topRatedDoctors = appointments
     ?.sort((a, b) => b.rating - a.rating)
     ?.slice(0, 3);
 
+  return (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {topRatedDoctors?.map((appointment) => (
+        <AppointCards key={appointment._id} appointment={appointment} />
+      ))}
+    </div>
+  );
+};
+
+const LoadingSpinner = () => {
+  return (
+    <div className="flex items-center justify-center py-32">
+      <Spinner size="lg" />
+    </div>
+  );
+};
+
+const TopRated = () => {
   return (
     <section className="py-20 bg-slate-950 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500/20 blur-[120px] rounded-full"></div>
@@ -25,7 +45,7 @@ const TopRated = async () => {
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-white">
             Top Rated{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-cyan-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent">
               Doctors
             </span>
           </h2>
@@ -36,11 +56,9 @@ const TopRated = async () => {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {topRatedDoctors?.map((appointment) => (
-            <AppointCards key={appointment._id} appointment={appointment} />
-          ))}
-        </div>
+        <Suspense fallback={<LoadingSpinner />}>
+          <TopRatedContent />
+        </Suspense>
       </div>
     </section>
   );
