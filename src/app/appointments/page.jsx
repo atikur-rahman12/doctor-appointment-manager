@@ -1,13 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import AppointCards from "@/components/AppointCards";
 
-const fetchAppointments = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments`);
-  const data = res.json();
-  return data || [];
-};
+const AppointmentsPage = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [search, setSearch] = useState("");
 
-const AppointmentsPage = async () => {
-  const appointments = await fetchAppointments();
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
+      );
+      const data = await res.json();
+      setAppointments(data);
+    };
+
+    fetchAppointments();
+  }, []);
+
+  const filteredAppointments = appointments.filter((appointment) =>
+    appointment.name.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <section className="min-h-screen bg-slate-950 py-16 px-4 md:px-8 relative overflow-hidden">
@@ -27,11 +41,37 @@ const AppointmentsPage = async () => {
             Browse experienced doctors and book your appointment quickly with
             DocAppoint.
           </p>
+
+          <div className="mt-8 flex justify-center">
+            <input
+              type="text"
+              placeholder="Search doctor by name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full max-w-md px-5 py-3 rounded-2xl bg-white/10 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:border-cyan-400 backdrop-blur-md"
+            />
+          </div>
         </div>
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {appointments?.map((appointment) => (
-            <AppointCards key={appointment._id} appointment={appointment} />
-          ))}
+          {filteredAppointments.length > 0 ? (
+            filteredAppointments.map((appointment) => (
+              <AppointCards key={appointment._id} appointment={appointment} />
+            ))
+          ) : (
+            <p className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+              <span className="text-6xl mb-4">🩺</span>
+
+              <span className="text-2xl md:text-3xl font-bold bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                No Doctor Found
+              </span>
+
+              <span className="text-gray-400 mt-3 max-w-md">
+                We couldn&apos;t find any doctor matching your search. Try
+                another name.
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </section>
