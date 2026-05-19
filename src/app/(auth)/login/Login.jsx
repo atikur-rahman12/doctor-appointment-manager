@@ -151,7 +151,7 @@ const Login = () => {
                 />
 
                 <Input
-                  placeholder="Enter your email address"
+                  placeholder="Enter your password"
                   className="pl-12 w-full"
                 />
               </div>

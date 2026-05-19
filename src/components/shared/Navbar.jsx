@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import Logo from "@/assets/logo.png";
 import Image from "next/image";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient, signOut } from "@/app/lib/auth-client";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
@@ -76,9 +76,17 @@ const Navbar = () => {
     ?.slice(0, 2)
     ?.toUpperCase();
 
+
+
   const handleLogout = async () => {
-    console.log("logout");
-  };
+  await signOut({
+    fetchOptions: {
+      onSuccess: () => {
+        window.location.href = "/";
+      },
+    },
+  });
+};
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/90 backdrop-blur-xl shadow-lg">
@@ -166,7 +174,7 @@ const Navbar = () => {
                   )}
 
                   <button
-                    onClick={handleLogout}
+                    onClick={async () => await authClient.signOut()}
                     className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-red-500/90 hover:bg-red-600 text-white font-medium transition duration-300 shadow-lg"
                   >
                     <LogOut size={18} />
@@ -221,7 +229,7 @@ const Navbar = () => {
                       </div>
 
                       <button
-                        onClick={handleLogout}
+                        onClick={async () => await authClient.signOut()}
                         className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium transition duration-300"
                       >
                         <LogOut size={16} />
