@@ -11,7 +11,7 @@ const NotFound = () => {
 
       <div className="text-center px-4 relative z-10 max-w-xl">
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 shadow-xl">
+          <div className="w-20 h-20 flex items-center justify-center rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 shadow-xl">
             <Stethoscope className="text-white w-10 h-10" />
           </div>
         </div>
@@ -30,7 +30,7 @@ const NotFound = () => {
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg hover:scale-105 transition"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg hover:scale-105 transition"
           >
             <Home size={18} />
             Back to Home
