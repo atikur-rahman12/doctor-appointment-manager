@@ -13,10 +13,70 @@ import {
 
 import { Mail, Lock } from "lucide-react";
 
-import google from "@/assets/google1.jpg"
+import google from "@/assets/google1.jpg";
 import Image from "next/image";
+import { signIn } from "@/app/lib/auth-client";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const loginData = Object.fromEntries(formData.entries());
+
+    const { data, error } = await signIn.email({
+      ...loginData,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(
+        error.message || "Login failed! Please check your credentials.",
+        {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            background: "rgba(15, 23, 42, 0.95)",
+            color: "#fff",
+            border: "1px solid rgba(239, 68, 68, 0.35)",
+            padding: "16px 20px",
+            borderRadius: "16px",
+            backdropFilter: "blur(12px)",
+            fontWeight: "500",
+            boxShadow: "0 10px 30px rgba(239, 68, 68, 0.15)",
+          },
+          iconTheme: {
+            primary: "#ef4444",
+            secondary: "#fff",
+          },
+        },
+      );
+
+      return;
+    }
+
+    toast.success("Login successful! Welcome back 👋", {
+      duration: 4000,
+      position: "top-center",
+      style: {
+        background: "rgba(15, 23, 42, 0.95)",
+        color: "#fff",
+        border: "1px solid rgba(34, 197, 94, 0.35)",
+        padding: "16px 20px",
+        borderRadius: "16px",
+        backdropFilter: "blur(12px)",
+        fontWeight: "500",
+        boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
+      },
+      iconTheme: {
+        primary: "#22c55e",
+        secondary: "#fff",
+      },
+    });
+  };
+
   return (
     <section className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-16 relative overflow-hidden">
       <div className="w-full max-w-md relative z-10">
@@ -30,6 +90,7 @@ const Login = () => {
           </div>
 
           <Form
+            onSubmit={handleLogin}
             className="flex flex-col gap-8 w-full"
             render={(props) => <form {...props} className="w-full" />}
           >
@@ -55,7 +116,7 @@ const Login = () => {
                 />
 
                 <Input
-                  placeholder="Enter your email"
+                  placeholder="Enter your email address"
                   className="pl-12 w-full"
                 />
               </div>
@@ -90,7 +151,7 @@ const Login = () => {
                 />
 
                 <Input
-                  placeholder="Enter your password"
+                  placeholder="Enter your email address"
                   className="pl-12 w-full"
                 />
               </div>

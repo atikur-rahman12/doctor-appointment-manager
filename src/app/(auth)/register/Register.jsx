@@ -16,14 +16,71 @@ import { User, Mail, Lock, Image as ImageIcon } from "lucide-react";
 import { FaArrowRight } from "react-icons/fa";
 import google from "@/assets/google1.jpg";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import { signUp } from "@/app/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const router = useRouter();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const registerData = Object.fromEntries(formData.entries());
+
+    const { data, error } = await signUp.email({
+      ...registerData,
+    });
+
+    if (error) {
+      toast.error(error.message || "Registration failed!", {
+        duration: 4000,
+        position: "top-center",
+        style: {
+          background: "rgba(15, 23, 42, 0.95)",
+          color: "#fff",
+          border: "1px solid rgba(239, 68, 68, 0.3)",
+          padding: "16px 20px",
+          borderRadius: "16px",
+          backdropFilter: "blur(12px)",
+          fontWeight: "500",
+        },
+        iconTheme: {
+          primary: "#ef4444",
+          secondary: "#fff",
+        },
+      });
+
+      return;
+    }
+
+    toast.success("Account created successfully!", {
+      duration: 4000,
+      position: "top-center",
+      style: {
+        background: "rgba(15, 23, 42, 0.95)",
+        color: "#fff",
+        border: "1px solid rgba(34, 197, 94, 0.3)",
+        padding: "16px 20px",
+        borderRadius: "16px",
+        backdropFilter: "blur(12px)",
+        fontWeight: "500",
+      },
+      iconTheme: {
+        primary: "#22c55e",
+        secondary: "#fff",
+      },
+    });
+
+    router.push("/login");
+  };
+
   return (
     <section className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-16 relative overflow-hidden">
-      {/* Card */}
       <div className="w-full max-w-md relative z-10">
         <div className="rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl p-8">
-          {/* Heading */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-extrabold text-white">Register</h1>
 
@@ -32,13 +89,12 @@ const Register = () => {
             </p>
           </div>
 
-          {/* Form */}
           <Form
             className="flex flex-col gap-5 w-full"
             render={(props) => <form {...props} className="w-full" />}
+            onSubmit={handleRegister}
           >
-            {/* Name */}
-            <TextField isRequired name="name" className="w-full mb-4">
+            <TextField isRequired className="w-full mb-4">
               <Label className="text-gray-300">Full Name</Label>
 
               <div className="relative w-full">
@@ -48,6 +104,7 @@ const Register = () => {
                 />
 
                 <Input
+                  name="name"
                   placeholder="Enter your full name"
                   className="pl-12 w-full"
                 />
@@ -56,7 +113,6 @@ const Register = () => {
               <FieldError />
             </TextField>
 
-            {/* Email */}
             <TextField
               isRequired
               name="email"
@@ -79,6 +135,8 @@ const Register = () => {
                 />
 
                 <Input
+                  name="email"
+                  type="email"
                   placeholder="Enter your email address"
                   className="pl-12 w-full"
                 />
@@ -87,7 +145,6 @@ const Register = () => {
               <FieldError />
             </TextField>
 
-            {/* Photo URL */}
             <TextField className="w-full mb-4">
               <Label className="text-gray-300">Photo URL</Label>
 
@@ -98,6 +155,8 @@ const Register = () => {
                 />
 
                 <Input
+                  name="image"
+                  type="url"
                   placeholder="https://your-photo-url.com"
                   className="pl-12 w-full"
                 />
@@ -106,7 +165,6 @@ const Register = () => {
               <FieldError />
             </TextField>
 
-            {/* Password */}
             <TextField
               isRequired
               name="password"
@@ -137,6 +195,8 @@ const Register = () => {
                 />
 
                 <Input
+                  name="password"
+                  type="password"
                   placeholder="Enter your password"
                   className="pl-12 w-full"
                 />
@@ -145,7 +205,6 @@ const Register = () => {
               <FieldError />
             </TextField>
 
-            {/* Register Button */}
             <Button
               type="submit"
               className="w-full mt-10 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold py-6 text-lg hover:scale-[1.02] transition duration-300 shadow-xl"
@@ -154,7 +213,6 @@ const Register = () => {
             </Button>
           </Form>
 
-          {/* Divider */}
           <div className="flex items-center gap-4 my-6">
             <div className="flex-1 h-px bg-white/10"></div>
 
@@ -163,7 +221,6 @@ const Register = () => {
             <div className="flex-1 h-px bg-white/10"></div>
           </div>
 
-          {/* Google Signup */}
           <Button className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300">
             <Image
               src={google}
@@ -175,7 +232,6 @@ const Register = () => {
             Continue with Google
           </Button>
 
-          {/* Login Link */}
           <p className="text-center text-gray-400 mt-8">
             Already have an account?{" "}
             <Link
