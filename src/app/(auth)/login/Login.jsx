@@ -28,7 +28,7 @@ const Login = () => {
 
     const { data, error } = await signIn.email({
       ...loginData,
-      // callbackURL: "/",
+      callbackURL: "/",
     });
 
     const { data:tokenData } = await authClient.token();
