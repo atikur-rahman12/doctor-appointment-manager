@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Star, MapPin, Clock3, Stethoscope, Hospital } from "lucide-react";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+import BookingModal from "@/components/BookingModal";
 
 const fetchSingleAppointment = async (id, token) => {
   const res = await fetch(
@@ -131,9 +132,7 @@ const DetailsPage = async ({ params }) => {
             </div>
 
             <div className="mt-10">
-              <Button className="px-8 py-6 rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 text-white text-lg font-semibold hover:scale-[1.03] transition duration-300 shadow-xl">
-                Book Appointment
-              </Button>
+              <BookingModal />
             </div>
           </div>
         </div>
