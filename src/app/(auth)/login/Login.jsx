@@ -15,7 +15,7 @@ import { Mail, Lock } from "lucide-react";
 
 import google from "@/assets/google1.jpg";
 import Image from "next/image";
-import { signIn } from "@/app/lib/auth-client";
+import { authClient, signIn } from "@/app/lib/auth-client";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -28,8 +28,11 @@ const Login = () => {
 
     const { data, error } = await signIn.email({
       ...loginData,
-      callbackURL: "/",
+      // callbackURL: "/",
     });
+
+    const { data:tokenData } = await authClient.token();
+    console.log(tokenData);
 
     if (error) {
       toast.error(
