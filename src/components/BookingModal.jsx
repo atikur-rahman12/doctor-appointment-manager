@@ -14,7 +14,6 @@ import {
   VenusAndMars,
 } from "lucide-react";
 
-/* FIELD COMPONENT */
 const Field = ({ label, required, icon: Icon, error, children }) => {
   return (
     <div className="w-full">
@@ -135,13 +134,10 @@ const BookingModal = () => {
 
       console.log("Success:", data);
 
-      // RESET FORM
       resetForm();
 
-      // CLOSE MODAL
       setOpen(false);
 
-      // SUCCESS TOAST
       toast.success("Appointment booked successfully!");
     } catch (error) {
       console.log(error);
@@ -166,10 +162,9 @@ const BookingModal = () => {
       />
 
       <Modal isOpen={open} onOpenChange={setOpen}>
-        {/* OPEN BUTTON */}
         <Button
           onPress={() => setOpen(true)}
-          className="group px-8 py-7 rounded-3xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-white text-lg font-semibold shadow-[0_10px_40px_rgba(14,165,233,0.45)] hover:scale-[1.03] transition-all duration-300"
+          className="group px-8 py-7 rounded-3xl bg-linear-to-r from-cyan-500 via-sky-500 to-blue-600 text-white text-lg font-semibold shadow-[0_10px_40px_rgba(14,165,233,0.45)] hover:scale-[1.03] transition-all duration-300"
         >
           <Sparkles
             size={20}
@@ -184,15 +179,13 @@ const BookingModal = () => {
         >
           <Modal.Container>
             <Modal.Dialog className="relative overflow-hidden rounded-[36px] border border-white/10 bg-slate-900/90 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.55)] max-w-2xl w-[95%]">
-              {/* CLOSE BUTTON */}
               <Modal.CloseTrigger className="absolute right-5 top-5 w-10 h-10 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 flex items-center justify-center">
                 ✕
               </Modal.CloseTrigger>
 
-              {/* HEADER */}
               <Modal.Header className="border-b border-white/10 px-8 py-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-3xl bg-linear-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
                     <Stethoscope className="text-white" size={30} />
                   </div>
 
@@ -208,10 +201,8 @@ const BookingModal = () => {
                 </div>
               </Modal.Header>
 
-              {/* BODY */}
               <Modal.Body className="px-8 py-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* EMAIL + DOCTOR */}
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field
                       label="Email"
@@ -244,7 +235,6 @@ const BookingModal = () => {
                     </Field>
                   </div>
 
-                  {/* PATIENT + PHONE */}
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field
                       label="Patient Name"
@@ -277,7 +267,6 @@ const BookingModal = () => {
                     </Field>
                   </div>
 
-                  {/* GENDER + ADDRESS */}
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field
                       label="Gender"
@@ -325,7 +314,6 @@ const BookingModal = () => {
                     </Field>
                   </div>
 
-                  {/* DATE + TIME */}
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field label="Date" required error={errors.date}>
                       <Input
@@ -348,7 +336,6 @@ const BookingModal = () => {
                     </Field>
                   </div>
 
-                  {/* REASON */}
                   <TextArea
                     name="reason"
                     value={formData.reason}
@@ -357,11 +344,10 @@ const BookingModal = () => {
                     className="w-full rounded-2xl bg-white/5 border border-white/10 text-white"
                   />
 
-                  {/* BUTTON */}
                   <div className="border-t border-white/10 pt-6">
                     <Button
                       type="submit"
-                      className="w-full h-14 text-lg font-semibold rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-white"
+                      className="w-full h-14 text-lg font-semibold rounded-2xl bg-linear-to-r from-cyan-500 via-sky-500 to-blue-600 text-white"
                     >
                       Confirm Booking
                     </Button>
