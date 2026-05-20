@@ -7,7 +7,7 @@ export async function proxy(request) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if(!session && !session?.user){
+  if (!session && !session?.user) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }
@@ -16,5 +16,5 @@ export async function proxy(request) {
 // export default function proxy(request) { ... }
 
 export const config = {
-  matcher: "/appointments/:id",
+  matcher: ["/appointments/:id", "/dashboard"]
 };

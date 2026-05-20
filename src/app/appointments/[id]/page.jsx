@@ -2,10 +2,17 @@ import { Button, Card } from "@heroui/react";
 import Image from "next/image";
 
 import { Star, MapPin, Clock3, Stethoscope, Hospital } from "lucide-react";
+import { auth } from "@/app/lib/auth";
+import { headers } from "next/headers";
 
-const fetchSingleAppointment = async (id) => {
+const fetchSingleAppointment = async (id, token) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}` || "",
+      },
+    },
     {
       cache: "no-store",
     },
@@ -18,8 +25,12 @@ const fetchSingleAppointment = async (id) => {
 
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  console.log(token);
 
-  const appointment = await fetchSingleAppointment(id);
+  const appointment = await fetchSingleAppointment(id, token);
 
   const {
     name,
