@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { LayoutDashboard, CalendarCheck2, User } from "lucide-react";
 
+export const metadata = {
+  title: "DocAppoint | Dashboard",
+  description: ".......",
+};
+
 const DashboardPage = () => {
   return (
     <section className="min-h-screen bg-slate-950 py-16 px-4 md:px-8 relative overflow-hidden">
