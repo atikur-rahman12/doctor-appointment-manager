@@ -1,11 +1,16 @@
-import React from 'react';
+import MyProfile from "./MyProfile";
+
+export const metadata = {
+  title: "Dashboard | My Profile",
+  description: ".......",
+};
 
 const MyProfilePage = () => {
-    return (
-        <div>
-            This Is My Profile Page
-        </div>
-    );
+  return (
+    <div>
+      <MyProfile />
+    </div>
+  );
 };
 
 export default MyProfilePage;

@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import Logo from "@/assets/logo.png";
 import Image from "next/image";
-import { authClient, signOut } from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth-client";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
@@ -18,6 +18,8 @@ const Navbar = () => {
   const profileRef = useRef(null);
 
   const pathname = usePathname();
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -76,17 +78,15 @@ const Navbar = () => {
     ?.slice(0, 2)
     ?.toUpperCase();
 
-
-
   const handleLogout = async () => {
-  await signOut({
-    fetchOptions: {
-      onSuccess: () => {
-        window.location.href = "/";
-      },
-    },
-  });
-};
+    await authClient.signOut();
+
+    const protectedRoutes = ["/dashboard/my-profile", "/dashboard/my-bookings"];
+
+    if (protectedRoutes.includes(pathname)) {
+      router.replace("/login");
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/90 backdrop-blur-xl shadow-lg">
@@ -174,7 +174,7 @@ const Navbar = () => {
                   )}
 
                   <button
-                    onClick={async () => await authClient.signOut()}
+                    onClick={handleLogout}
                     className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-red-500/90 hover:bg-red-600 text-white font-medium transition duration-300 shadow-lg"
                   >
                     <LogOut size={18} />
@@ -229,7 +229,7 @@ const Navbar = () => {
                       </div>
 
                       <button
-                        onClick={async () => await authClient.signOut()}
+                        onClick={handleLogout}
                         className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium transition duration-300"
                       >
                         <LogOut size={16} />

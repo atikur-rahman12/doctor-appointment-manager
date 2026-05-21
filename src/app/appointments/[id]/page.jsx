@@ -6,6 +6,11 @@ import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
 import BookingModal from "@/components/BookingModal";
 
+export const metadata = {
+  title: "All Appointments | Doctor Details",
+  description: ".......",
+};
+
 const fetchSingleAppointment = async (id, token) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`,
