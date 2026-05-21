@@ -15,7 +15,7 @@ import { Mail, Lock } from "lucide-react";
 
 import google from "@/assets/google1.jpg";
 import Image from "next/image";
-import { signIn } from "@/app/lib/auth-client";
+import { authClient, signIn } from "@/app/lib/auth-client";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -43,6 +43,12 @@ const Login = () => {
 
     // Full reload + redirect
     window.location.href = "/";
+  };
+
+  const handleGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -148,7 +154,10 @@ const Login = () => {
             <div className="flex-1 h-px bg-white/10"></div>
           </div>
 
-          <Button className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300">
+          <Button
+            onPress={handleGoogleLogin}
+            className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300"
+          >
             <Image
               src={google}
               alt="google"

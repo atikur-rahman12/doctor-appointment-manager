@@ -17,10 +17,10 @@ import { FaArrowRight } from "react-icons/fa";
 import google from "@/assets/google1.jpg";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { signUp } from "@/app/lib/auth-client";
+import { authClient, signUp } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-const Register = () => {
+const Register = ({ onPress }) => {
   const router = useRouter();
 
   const handleRegister = async (e) => {
@@ -75,6 +75,12 @@ const Register = () => {
     });
 
     router.push("/login");
+  };
+
+  const handleGoogleRegister = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -221,7 +227,10 @@ const Register = () => {
             <div className="flex-1 h-px bg-white/10"></div>
           </div>
 
-          <Button className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300">
+          <Button
+            onPress={handleGoogleRegister}
+            className="w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10 py-6 text-lg font-medium transition duration-300"
+          >
             <Image
               src={google}
               alt="google"

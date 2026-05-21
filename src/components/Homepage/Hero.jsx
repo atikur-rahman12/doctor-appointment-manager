@@ -49,7 +49,7 @@ const Hero = () => {
               </Link>
 
               <Link
-                href="/bookings"
+                href="/dashboard/my-bookings"
                 className="flex gap-3 px-8 py-3 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-500 hover:text-white transition duration-300"
               >
                 <CalendarCheck2 /> My Bookings
