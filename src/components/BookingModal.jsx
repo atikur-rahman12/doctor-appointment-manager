@@ -37,14 +37,14 @@ const Field = ({ label, required, icon: Icon, error, children }) => {
   );
 };
 
-const BookingModal = () => {
+const BookingModal = ({ doctor, userEmail }) => {
   const [open, setOpen] = useState(false);
 
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
-    email: "",
-    doctor: "",
+    email: userEmail || "",
+    doctor: doctor?.name || "",
     patient: "",
     phone: "",
     gender: "",
@@ -90,8 +90,6 @@ const BookingModal = () => {
     const newErrors = {};
 
     if (!formData.email.trim()) newErrors.email = "Email is required";
-
-    if (!formData.doctor.trim()) newErrors.doctor = "Doctor is required";
 
     if (!formData.patient.trim())
       newErrors.patient = "Patient name is required";
@@ -227,8 +225,8 @@ const BookingModal = () => {
                     >
                       <Input
                         name="doctor"
-                        value={formData.doctor}
-                        onChange={handleChange}
+                        value={doctor?.name || ""}
+                        readOnly
                         placeholder="Doctor name"
                         className="w-full pl-12 h-12 rounded-2xl bg-white/5 border border-white/10 text-white"
                       />
@@ -336,13 +334,15 @@ const BookingModal = () => {
                     </Field>
                   </div>
 
-                  <TextArea
-                    name="reason"
-                    value={formData.reason}
-                    onChange={handleChange}
-                    placeholder="Write your reason (optional)"
-                    className="w-full rounded-2xl bg-white/5 border border-white/10 text-white"
-                  />
+                  <Field label="Reason">
+                    <TextArea
+                      name="reason"
+                      value={formData.reason}
+                      onChange={handleChange}
+                      placeholder="Write your reason (optional)"
+                      className="w-full rounded-2xl bg-white/5 border border-white/10 text-white"
+                    />
+                  </Field>
 
                   <div className="border-t border-white/10 pt-6">
                     <Button

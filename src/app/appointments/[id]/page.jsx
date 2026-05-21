@@ -31,6 +31,12 @@ const DetailsPage = async ({ params }) => {
   });
   console.log(token);
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const userEmail = session?.user?.email;
+
   const appointment = await fetchSingleAppointment(id, token);
 
   const {
@@ -132,7 +138,7 @@ const DetailsPage = async ({ params }) => {
             </div>
 
             <div className="mt-10">
-              <BookingModal />
+              <BookingModal userEmail={userEmail} doctor={appointment} />
             </div>
           </div>
         </div>
