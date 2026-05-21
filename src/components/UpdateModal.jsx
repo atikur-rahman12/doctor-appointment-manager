@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Button, Input, Modal, TextArea } from "@heroui/react";
 
-import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import { Pencil, SquarePen, Stethoscope, User } from "lucide-react";
 
@@ -27,7 +27,7 @@ const Field = ({ label, icon: Icon, children }) => {
   );
 };
 
-const UpdateModal = ({ booking }) => {
+const UpdateModal = ({ booking, onUpdate }) => {
   const [open, setOpen] = useState(false);
 
   const onSubmit = async (e) => {
@@ -54,31 +54,69 @@ const UpdateModal = ({ booking }) => {
       console.log(data);
 
       if (data.modifiedCount > 0) {
-        alert("Appointment updated successfully");
+        const updatedData = {
+          ...booking,
+          ...updateBooking,
+        };
+
+        onUpdate(updatedData);
+
+        toast.success("Appointment updated successfully ✨", {
+          duration: 3000,
+          style: {
+            background:
+              "linear-gradient(135deg, rgba(6,182,212,0.15), rgba(59,130,246,0.15))",
+            color: "#fff",
+            border: "1px solid rgba(34,211,238,0.25)",
+            backdropFilter: "blur(12px)",
+            borderRadius: "18px",
+            padding: "16px 20px",
+            boxShadow: "0 10px 30px rgba(6,182,212,0.15)",
+          },
+          iconTheme: {
+            primary: "#22d3ee",
+            secondary: "#0f172a",
+          },
+        });
+
         setOpen(false);
+      } else {
+        toast.error("Please update at least one field or close !!", {
+          duration: 3000,
+          style: {
+            background:
+              "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(127,29,29,0.2))",
+            color: "#fff",
+            border: "1px solid rgba(248,113,113,0.25)",
+            backdropFilter: "blur(12px)",
+            borderRadius: "18px",
+            padding: "16px 20px",
+            boxShadow: "0 10px 30px rgba(239,68,68,0.15)",
+          },
+        });
       }
     } catch (error) {
       console.log(error);
+
+      toast.error("Something went wrong!", {
+        duration: 3000,
+        style: {
+          background:
+            "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(127,29,29,0.2))",
+          color: "#fff",
+          border: "1px solid rgba(248,113,113,0.25)",
+          backdropFilter: "blur(12px)",
+          borderRadius: "18px",
+          padding: "16px 20px",
+          boxShadow: "0 10px 30px rgba(239,68,68,0.15)",
+        },
+      });
     }
   };
 
   return (
     <>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          style: {
-            background: "#0f172a",
-            color: "#ffffff",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "16px",
-            padding: "14px 18px",
-          },
-        }}
-      />
-
       <Modal isOpen={open} onOpenChange={setOpen}>
-        {/* OPEN BUTTON */}
         <Button
           onPress={() => setOpen(true)}
           size="sm"
@@ -88,19 +126,16 @@ const UpdateModal = ({ booking }) => {
           Update
         </Button>
 
-        {/* MODAL */}
         <Modal.Backdrop
           variant="blur"
           className="bg-slate-950/80 backdrop-blur-md"
         >
           <Modal.Container>
             <Modal.Dialog className="relative overflow-hidden rounded-[36px] border border-white/10 bg-slate-900/90 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.55)] max-w-xl w-[92%]">
-              {/* CLOSE */}
               <Modal.CloseTrigger className="absolute right-5 top-5 w-10 h-10 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 flex items-center justify-center">
                 ✕
               </Modal.CloseTrigger>
 
-              {/* HEADER */}
               <Modal.Header className="border-b border-white/10 px-8 py-6">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-3xl bg-linear-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
@@ -115,10 +150,8 @@ const UpdateModal = ({ booking }) => {
                 </div>
               </Modal.Header>
 
-              {/* BODY */}
               <Modal.Body className="px-8 py-8">
                 <form className="space-y-6" onSubmit={onSubmit}>
-                  {/* DOCTOR */}
                   <Field label="Doctor" icon={Stethoscope}>
                     <Input
                       name="doctor"
@@ -138,7 +171,6 @@ const UpdateModal = ({ booking }) => {
                     />
                   </Field>
 
-                  {/* DATE + TIME */}
                   <div className="grid md:grid-cols-2 gap-5">
                     <Field label="Date">
                       <Input
@@ -159,7 +191,6 @@ const UpdateModal = ({ booking }) => {
                     </Field>
                   </div>
 
-                  {/* REASON */}
                   <Field label="Reason">
                     <TextArea
                       name="reason"
@@ -169,7 +200,6 @@ const UpdateModal = ({ booking }) => {
                     />
                   </Field>
 
-                  {/* BUTTON */}
                   <Button
                     type="submit"
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-linear-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/30 text-white hover:from-cyan-500/30 hover:to-blue-500/30 shadow-lg shadow-cyan-500/10 transition-all duration-300 backdrop-blur-md"

@@ -28,8 +28,19 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="grow">{children}</main>
-        
-        <Toaster />
+
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "#0f172a",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "16px",
+              padding: "14px 18px",
+            },
+          }}
+        />
         <Footer />
       </body>
     </html>
