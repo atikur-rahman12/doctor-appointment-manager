@@ -74,6 +74,8 @@ const Register = ({ onPress }) => {
       },
     });
 
+    await authClient.signOut();
+
     router.push("/login");
   };
 

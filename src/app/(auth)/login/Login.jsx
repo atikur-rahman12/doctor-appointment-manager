@@ -15,10 +15,23 @@ import { Mail, Lock } from "lucide-react";
 
 import google from "@/assets/google1.jpg";
 import Image from "next/image";
-import { authClient, signIn } from "@/app/lib/auth-client";
+import { authClient, signIn, useSession } from "@/app/lib/auth-client";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
+
+  const { data: session, isPending } = useSession();
+
+  // Already logged in hole home e niye jabe
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/");
+    }
+  }, [session, router]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -41,7 +54,6 @@ const Login = () => {
 
     toast.success("Login successful! Welcome back 👋");
 
-    // Full reload + redirect
     window.location.href = "/";
   };
 
@@ -50,6 +62,15 @@ const Login = () => {
       provider: "google",
     });
   };
+
+  // Session loading hole
+  if (isPending) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-16 relative overflow-hidden">
@@ -90,6 +111,7 @@ const Login = () => {
                 />
 
                 <Input
+                  name="email"
                   placeholder="Enter your email address"
                   className="pl-12 w-full"
                 />
@@ -121,6 +143,7 @@ const Login = () => {
                 />
 
                 <Input
+                  name="password"
                   placeholder="Enter your password"
                   className="pl-12 w-full"
                 />
