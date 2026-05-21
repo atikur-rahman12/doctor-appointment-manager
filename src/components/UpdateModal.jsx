@@ -61,7 +61,7 @@ const UpdateModal = ({ booking, onUpdate }) => {
 
         onUpdate(updatedData);
 
-        toast.success("Appointment updated successfully ✨", {
+        toast.success("Appointment updated successfully !", {
           duration: 3000,
           style: {
             background:

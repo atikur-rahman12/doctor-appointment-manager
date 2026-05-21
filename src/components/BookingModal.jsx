@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Input, Modal, TextArea } from "@heroui/react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import {
   Mail,
