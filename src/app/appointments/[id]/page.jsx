@@ -1,4 +1,4 @@
-import { Button, Card } from "@heroui/react";
+import { Card } from "@heroui/react";
 import Image from "next/image";
 
 import { Star, MapPin, Clock3, Stethoscope, Hospital } from "lucide-react";
@@ -25,6 +25,7 @@ const fetchSingleAppointment = async (id, token) => {
   );
 
   const data = await res.json();
+  console.log(data)
 
   return data || {};
 };
