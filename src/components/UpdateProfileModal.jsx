@@ -2,19 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { Camera, User } from "lucide-react";
-import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
+import { Button, Input, Label, Modal, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
 import { authClient } from "@/app/lib/auth-client";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-const UpdateProfileModal = ({ user, setSessionUser }) => {
+const UpdateProfileModal = ({ user }) => {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // ✅ MUST: correct hook usage (NO invalid call)
+  const router = useRouter();
   const { refetch } = authClient.useSession();
 
-  // Prefill data
   useEffect(() => {
     if (user) {
       setName(user?.name || "");
@@ -22,76 +24,51 @@ const UpdateProfileModal = ({ user, setSessionUser }) => {
     }
   }, [user]);
 
-  // Update Profile
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      const { data: tokenData } = await authClient.token();
-
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/${user.email}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${tokenData?.token}`,
-          },
-          body: JSON.stringify({
-            name,
-            image: photo,
-          }),
-        },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data?.message || "Update failed");
-      }
-
-      // ✅ 1. Instant UI update
-      setSessionUser((prev) => ({
-        ...prev,
+      await authClient.updateUser({
         name,
         image: photo,
-      }));
+      });
 
-      // ✅ 2. Navbar + session sync FIX
       await refetch();
+      router.refresh();
 
       toast.success("Profile updated successfully!");
 
-      // close modal
-      document.getElementById("closeModalBtn")?.click();
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Something went wrong");
+      toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Modal>
-      <Button className="flex-1 rounded-xl bg-cyan-600 text-white hover:bg-cyan-700">
+    <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Button
+        onPress={() => setIsOpen(true)}
+        className="flex-1 rounded-xl bg-cyan-600 text-white hover:bg-cyan-700"
+      >
         Edit Profile
       </Button>
 
       <Modal.Backdrop className="bg-black/50 backdrop-blur-sm">
         <Modal.Container placement="center">
           <Modal.Dialog className="w-full max-w-md rounded-3xl bg-white dark:bg-zinc-900 shadow-2xl">
-            <Modal.CloseTrigger />
-
-            {/* Header */}
             <Modal.Header className="text-center p-6">
               <div className="mb-4">
                 {photo ? (
-                  <img
+                  <Image
                     src={photo}
                     alt="profile"
+                    height={150}
+                    width={150}
                     className="h-24 w-24 rounded-full mx-auto object-cover border-4 border-cyan-500"
                   />
                 ) : (
@@ -105,7 +82,6 @@ const UpdateProfileModal = ({ user, setSessionUser }) => {
               <p className="text-sm text-gray-500">Change your name & photo</p>
             </Modal.Header>
 
-            {/* Body */}
             <Modal.Body className="p-6">
               <form
                 onSubmit={handleUpdateProfile}
@@ -133,7 +109,11 @@ const UpdateProfileModal = ({ user, setSessionUser }) => {
                 </TextField>
 
                 <div className="flex gap-3 justify-end mt-3">
-                  <Button id="closeModalBtn" variant="secondary">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onPress={() => setIsOpen(false)}
+                  >
                     Cancel
                   </Button>
 

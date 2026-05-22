@@ -13,24 +13,23 @@ import Image from "next/image";
 import UpdateProfileModal from "@/components/UpdateProfileModal";
 
 const MyProfile = () => {
-  const { data: session, isLoading } = useSession();
+  const {
+    data: session,
+    isLoading,
+    refetch,
+  } = useSession({
+    query: {
+      disableCookieCache: true,
+    },
+  });
   console.log(session, "Session");
 
   const [showLoader, setShowLoader] = useState(true);
 
-  // Local state for instant UI update
-  const [sessionUser, setSessionUser] = useState(null);
 
-  // Set session user
-  useEffect(() => {
-    if (session?.user) {
-      setSessionUser(session.user);
-    }
-  }, [session]);
 
-  const user = sessionUser;
+  const user = session?.user;
 
-  // Logout Function
   const handleLogout = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -132,7 +131,7 @@ const MyProfile = () => {
               {/* Update Profile */}
               <UpdateProfileModal
                 user={user}
-                setSessionUser={setSessionUser}
+                // setSessionUser={setSessionUser}
                 session={session}
               />
 
