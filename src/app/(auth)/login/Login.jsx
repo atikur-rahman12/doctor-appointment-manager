@@ -25,7 +25,6 @@ const Login = () => {
 
   const { data: session, isPending } = useSession();
 
-  // Already logged in hole home e niye jabe
   useEffect(() => {
     if (session?.user) {
       router.push("/");
@@ -54,6 +53,7 @@ const Login = () => {
 
     toast.success("Login successful! Welcome back 👋");
 
+    // Full reload + redirect
     window.location.href = "/";
   };
 
@@ -63,7 +63,6 @@ const Login = () => {
     });
   };
 
-  // Session loading hole
   if (isPending) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
@@ -112,6 +111,7 @@ const Login = () => {
 
                 <Input
                   name="email"
+                  type="email"
                   placeholder="Enter your email address"
                   className="pl-12 w-full"
                 />
@@ -144,6 +144,7 @@ const Login = () => {
 
                 <Input
                   name="password"
+                  type="password"
                   placeholder="Enter your password"
                   className="pl-12 w-full"
                 />

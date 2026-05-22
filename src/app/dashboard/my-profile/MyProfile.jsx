@@ -1,17 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { authClient, useSession } from "@/app/lib/auth-client";
+
 import { Card, Button } from "@heroui/react";
-import { Mail, User, Pencil, LogOut } from "lucide-react";
+
+import { Mail, User, LogOut } from "lucide-react";
+
 import Image from "next/image";
+
+import UpdateProfileModal from "@/components/UpdateProfileModal";
 
 const MyProfile = () => {
   const { data: session, isLoading } = useSession();
+  console.log(session, "Session");
 
   const [showLoader, setShowLoader] = useState(true);
 
-  const user = session?.user;
+  // Local state for instant UI update
+  const [sessionUser, setSessionUser] = useState(null);
+
+  // Set session user
+  useEffect(() => {
+    if (session?.user) {
+      setSessionUser(session.user);
+    }
+  }, [session]);
+
+  const user = sessionUser;
 
   // Logout Function
   const handleLogout = async () => {
@@ -24,6 +41,7 @@ const MyProfile = () => {
     });
   };
 
+  // User initials
   const userInitials = user?.name
     ?.split(" ")
     ?.map((word) => word[0])
@@ -31,6 +49,7 @@ const MyProfile = () => {
     ?.slice(0, 2)
     ?.toUpperCase();
 
+  // Fake loader for smooth UX
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLoader(false);
@@ -40,77 +59,87 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
-      <Card className="w-full max-w-md p-6 rounded-2xl shadow-2xl bg-white/10 backdrop-blur-md border border-white/20">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
+      <Card className="w-full max-w-md rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
         {/* Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white">My Profile</h1>
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold text-white">My Profile</h1>
 
-          <p className="text-sm text-gray-300">Your account information</p>
+          <p className="mt-1 text-sm text-gray-300">Your account information</p>
         </div>
 
         {/* Loading */}
         {isLoading || showLoader ? (
           <div className="flex flex-col items-center justify-center py-10">
-            <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
 
-            <p className="text-gray-300 mt-3 text-sm">Loading profile...</p>
+            <p className="mt-3 text-sm text-gray-300">Loading profile...</p>
           </div>
         ) : (
           <>
             {/* Avatar */}
-            <div className="flex justify-center mb-5">
+            <div className="mb-6 flex justify-center">
               {user?.image ? (
                 <Image
                   src={user.image}
                   alt="Profile"
                   width={150}
                   height={150}
-                  className="w-24 h-24 rounded-full object-cover border border-white/20 shadow-xl"
+                  className="h-28 w-28 rounded-full border-4 border-cyan-400 object-cover shadow-2xl"
                 />
               ) : (
-                <div className="w-24 h-24 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-4xl border border-cyan-300 shadow-lg">
+                <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan-300 bg-gradient-to-r from-cyan-500 to-blue-600 text-4xl font-bold text-white shadow-xl">
                   {userInitials}
                 </div>
               )}
             </div>
 
-            <hr className="mb-7 border-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
+            {/* Divider */}
+            <hr className="mb-7 h-px border-0 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
             {/* Name */}
-            <div className="flex items-center gap-3 text-white mb-4">
-              <User size={18} />
+            <div className="mb-5 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-400">
+                <User size={20} />
+              </div>
 
               <div>
-                <p className="text-xs text-gray-300">Name</p>
+                <p className="text-xs uppercase tracking-wide text-gray-400">
+                  Name
+                </p>
 
-                <p className="font-semibold">{user?.name}</p>
+                <p className="font-semibold text-white">{user?.name}</p>
               </div>
             </div>
 
             {/* Email */}
-            <div className="flex items-center gap-3 text-white mb-6">
-              <Mail size={18} />
+            <div className="mb-6 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500/20 text-blue-400">
+                <Mail size={20} />
+              </div>
 
               <div>
-                <p className="text-xs text-gray-300">Email Address</p>
+                <p className="text-xs uppercase tracking-wide text-gray-400">
+                  Email Address
+                </p>
 
-                <p className="font-semibold">{user?.email}</p>
+                <p className="font-semibold text-white">{user?.email}</p>
               </div>
             </div>
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-4">
-              {/* Update Button */}
-              <Button className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                <Pencil size={16} />
-                Update
-              </Button>
+            <div className="mt-4 flex gap-3">
+              {/* Update Profile */}
+              <UpdateProfileModal
+                user={user}
+                setSessionUser={setSessionUser}
+                session={session}
+              />
 
-              {/* Logout Button */}
+              {/* Logout */}
               <Button
                 onPress={handleLogout}
-                className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white rounded-xl"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 text-white hover:bg-red-700"
               >
                 <LogOut size={16} />
                 Logout
