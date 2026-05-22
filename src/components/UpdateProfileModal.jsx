@@ -5,7 +5,7 @@ import { Camera, User } from "lucide-react";
 import { Button, Input, Label, Modal, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
 import { authClient } from "@/app/lib/auth-client";
-import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 
 const UpdateProfileModal = ({ user, refetch }) => {
@@ -13,9 +13,6 @@ const UpdateProfileModal = ({ user, refetch }) => {
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  const router = useRouter();
-
 
   useEffect(() => {
     if (user) {
