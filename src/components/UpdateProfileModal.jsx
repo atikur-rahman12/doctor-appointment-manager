@@ -15,7 +15,7 @@ const UpdateProfileModal = ({ user, refetch }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
-  // const { refetch } = authClient.useSession();
+
 
   useEffect(() => {
     if (user) {
@@ -56,7 +56,7 @@ const UpdateProfileModal = ({ user, refetch }) => {
         onPress={() => setIsOpen(true)}
         className="flex-1 rounded-xl bg-cyan-600 text-white hover:bg-cyan-700"
       >
-        Edit Profile
+        Update Profile
       </Button>
 
       <Modal.Backdrop className="bg-black/50 backdrop-blur-sm">

@@ -53,7 +53,7 @@ const Login = () => {
 
     toast.success("Login successful! Welcome back 👋");
 
-    // Full reload + redirect
+ 
     window.location.href = "/";
   };
 
