@@ -8,14 +8,14 @@ import { authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const UpdateProfileModal = ({ user }) => {
+const UpdateProfileModal = ({ user, refetch }) => {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
-  const { refetch } = authClient.useSession();
+  // const { refetch } = authClient.useSession();
 
   useEffect(() => {
     if (user) {
@@ -30,17 +30,18 @@ const UpdateProfileModal = ({ user }) => {
     try {
       setLoading(true);
 
-      await authClient.updateUser({
+      const res = await authClient.updateUser({
         name,
         image: photo,
       });
 
-      await refetch();
-      router.refresh();
+      if (res?.data) {
+        await refetch();
 
-      toast.success("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
 
-      setIsOpen(false);
+        setIsOpen(false);
+      }
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Something went wrong");

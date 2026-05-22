@@ -26,8 +26,6 @@ const MyProfile = () => {
 
   const [showLoader, setShowLoader] = useState(true);
 
-
-
   const user = session?.user;
 
   const handleLogout = async () => {
@@ -40,7 +38,6 @@ const MyProfile = () => {
     });
   };
 
-  // User initials
   const userInitials = user?.name
     ?.split(" ")
     ?.map((word) => word[0])
@@ -48,7 +45,6 @@ const MyProfile = () => {
     ?.slice(0, 2)
     ?.toUpperCase();
 
-  // Fake loader for smooth UX
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLoader(false);
@@ -58,16 +54,14 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
       <Card className="w-full max-w-md rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
-        {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-bold text-white">My Profile</h1>
 
           <p className="mt-1 text-sm text-gray-300">Your account information</p>
         </div>
 
-        {/* Loading */}
         {isLoading || showLoader ? (
           <div className="flex flex-col items-center justify-center py-10">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
@@ -76,7 +70,6 @@ const MyProfile = () => {
           </div>
         ) : (
           <>
-            {/* Avatar */}
             <div className="mb-6 flex justify-center">
               {user?.image ? (
                 <Image
@@ -87,16 +80,14 @@ const MyProfile = () => {
                   className="h-28 w-28 rounded-full border-4 border-cyan-400 object-cover shadow-2xl"
                 />
               ) : (
-                <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan-300 bg-gradient-to-r from-cyan-500 to-blue-600 text-4xl font-bold text-white shadow-xl">
+                <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan-300 bg-linear-to-r from-cyan-500 to-blue-600 text-4xl font-bold text-white shadow-xl">
                   {userInitials}
                 </div>
               )}
             </div>
 
-            {/* Divider */}
-            <hr className="mb-7 h-px border-0 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <hr className="mb-7 h-px border-0 bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
-            {/* Name */}
             <div className="mb-5 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan-500/20 text-cyan-400">
                 <User size={20} />
@@ -111,7 +102,6 @@ const MyProfile = () => {
               </div>
             </div>
 
-            {/* Email */}
             <div className="mb-6 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-500/20 text-blue-400">
                 <Mail size={20} />
@@ -126,16 +116,10 @@ const MyProfile = () => {
               </div>
             </div>
 
-            {/* Buttons */}
             <div className="mt-4 flex gap-3">
               {/* Update Profile */}
-              <UpdateProfileModal
-                user={user}
-                // setSessionUser={setSessionUser}
-                session={session}
-              />
+              <UpdateProfileModal user={user} refetch={refetch} />
 
-              {/* Logout */}
               <Button
                 onPress={handleLogout}
                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 text-white hover:bg-red-700"
