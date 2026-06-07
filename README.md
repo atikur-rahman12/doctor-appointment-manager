@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏥 DocAppoint – Doctor Appointment Manager
 
-## Getting Started
+A modern full-stack **Doctor Appointment Booking System** built with MERN stack and secure authentication.  
+Users can browse doctors, book appointments, manage bookings, and update profiles through a smooth and responsive UI.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Demo
+> (Add your live link here after deployment)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📌 Project Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**DocAppoint** allows users to:
+- Browse available doctors
+- View detailed doctor profiles
+- Book appointments securely
+- Manage their bookings from a personal dashboard
+- Update profile information
+- Authenticate using secure login system (JWT + Better Auth)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🏠 Home Page
+- Modern hero banner (Swiper.js supported)
+- Top 3 rated doctors section (dynamic data)
+- Doctor cards with **View Details** button
+- Conditional navigation (login required for booking/details)
+- Additional custom sections for UI enhancement
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### 🩺 Doctor Details Page
+- Full doctor profile display
+- Availability schedule
+- Hospital & location info
+- Consultation fee
+- **Book Appointment button**
+- Booking via modal or separate page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📅 Appointment System
+- Book appointments with form
+- Save data to MongoDB
+- Success toast on booking
+- Stored fields:
+  - Patient name
+  - Email
+  - Phone number
+  - Gender
+  - Appointment date & time
+
+---
+
+### 📋 All Appointments Page
+- Displays all available appointments
+- Search by doctor name
+- Responsive card layout
+- View Details functionality with auth protection
+
+---
+
+### 🔐 Authentication System
+- JWT-based secure authentication
+- Login & Registration system
+- Google/GitHub social login (one provider)
+- Protected routes
+
+#### Login Features
+- Email & Password login
+- Forgot password UI (optional)
+- Redirect to previous route after login
+
+#### Registration Features
+- Name, Email, Photo, Password
+- Password rules:
+  - 1 uppercase letter
+  - 1 lowercase letter
+  - Minimum 6 characters
+
+---
+
+### 🧑‍⚕️ Dashboard (Private Route)
+
+#### 📌 My Bookings
+- View only logged-in user’s appointments
+- Update & Delete functionality
+- Instant UI update without reload
+- MongoDB sync
+
+#### 👤 My Profile
+- View user info
+- Update name & photo
+- Instant UI update
+- Modal-based editing
+
+---
+
+## ⚙️ Tech Stack
+
+### Frontend
+- React.js
+- Tailwind CSS
+- React Router DOM
+- Axios
+- Swiper.js
+- React Toastify
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication
+- Better Auth (Session/JWT handling)
+
+---
+
+## 🧠 Core Functionalities
+
+- 🔐 JWT Authentication System
+- 📦 MongoDB CRUD Operations
+- 🔎 Search functionality (Doctor name)
+- 🧾 Appointment booking system
+- ✏️ Update/Delete bookings
+- 👤 Profile management
+- 🔒 Protected routes
+- 📱 Fully responsive UI
+
+---
+
+## 📱 UI/UX Requirements
+
+- Consistent typography & spacing
+- Equal card size layout
+- Modern dashboard design
+- Responsive for mobile, tablet, desktop
+- Clean navbar & footer design
+- Smooth animations & transitions
+- Theme-ready structure (optional dark mode support)
+
+---
