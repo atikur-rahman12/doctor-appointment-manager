@@ -6,7 +6,7 @@ Users can browse doctors, book appointments, manage bookings, and update profile
 ---
 
 ## 🚀 Live Demo
-> (Add your live link here after deployment)
+> https://doctor-appointment-manager.vercel.app
 
 ---
 
@@ -129,17 +129,5 @@ Users can browse doctors, book appointments, manage bookings, and update profile
 - 👤 Profile management
 - 🔒 Protected routes
 - 📱 Fully responsive UI
-
----
-
-## 📱 UI/UX Requirements
-
-- Consistent typography & spacing
-- Equal card size layout
-- Modern dashboard design
-- Responsive for mobile, tablet, desktop
-- Clean navbar & footer design
-- Smooth animations & transitions
-- Theme-ready structure (optional dark mode support)
 
 ---
